@@ -7,7 +7,6 @@ import com.ximalaya.android.util.Report;
 import com.ximalaya.ting.android.activity.login.WelcomeActivity;
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
 
 public class FoundSearchTest extends
 		ActivityInstrumentationTestCase2<WelcomeActivity> {
@@ -23,13 +22,13 @@ public class FoundSearchTest extends
 	}
 
 	public void tearDown() {
-		// solo.finishOpenedActivities();
+		solo.finishOpenedActivities();
 	}
 
-	//无内容的时候搜索
+	// 无内容的时候搜索
 	public void test01_NoTextSearch() {
 
-		 String notext="不输入任何内容直接查找";
+		String notext = "不输入任何内容直接查找";
 		// solo.clickOnText("");
 		try {
 			solo.sleep(2000);
@@ -45,8 +44,7 @@ public class FoundSearchTest extends
 			boolean isnotext = solo.searchText(".*?请输入搜索关键词.*?");
 			if (isnotext) {
 				System.out.println("the tip is true");
-			}
-			else
+			} else
 				Report.writeHTMLLog(notext, "操作结束,提示不正确", Report.FAIL, "");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -54,8 +52,7 @@ public class FoundSearchTest extends
 		}
 	}
 
-	
-	//搜索声音
+	// 搜索声音
 	public void test02_SoundSearch() {
 
 		// solo.clickOnText("");
@@ -66,8 +63,8 @@ public class FoundSearchTest extends
 			ViewOperationFunc.enterTextIndex(solo, 0, "老梁");
 			ViewOperationFunc.clickById(solo, "search_button");
 			solo.sleep(2000);
-			
-			//调用截图函数开始截图	
+
+			// 调用截图函数开始截图
 			ScreenshotFunc.screenShot(solo);
 			ScreenshotFunc.screenshotSolo(solo);
 			solo.goBack();
@@ -78,8 +75,8 @@ public class FoundSearchTest extends
 			e.printStackTrace();
 		}
 	}
-	
-	//搜索专辑
+
+	// 搜索专辑
 	public void test03_AlbumSearch() {
 
 		// solo.clickOnText("");
@@ -90,8 +87,8 @@ public class FoundSearchTest extends
 			ViewOperationFunc.enterTextIndex(solo, 0, "老梁");
 			ViewOperationFunc.clickById(solo, "search_button");
 			solo.sleep(2000);
-			
-			//调用截图函数开始截图	
+
+			// 调用截图函数开始截图
 			ScreenshotFunc.screenShot(solo);
 			ScreenshotFunc.screenshotSolo(solo);
 			solo.goBack();
@@ -102,28 +99,28 @@ public class FoundSearchTest extends
 			e.printStackTrace();
 		}
 	}
-	
-	//搜索人
-		public void test04_PersonSearch() {
 
-			// solo.clickOnText("");
-			try {
-				ViewOperationFunc.clickById(solo, "search_tv");
-				solo.sleep(1000);
-				ViewOperationFunc.clickById(solo, "hot");
-				ViewOperationFunc.enterTextIndex(solo, 0, "老梁");
-				ViewOperationFunc.clickById(solo, "search_button");
-				solo.sleep(2000);
-				
-				//调用截图函数开始截图	
-				ScreenshotFunc.screenShot(solo);
-				ScreenshotFunc.screenshotSolo(solo);
-				solo.goBack();
-				ViewOperationFunc.clearEditText(solo, 0);
+	// 搜索人
+	public void test04_PersonSearch() {
 
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		// solo.clickOnText("");
+		try {
+			ViewOperationFunc.clickById(solo, "search_tv");
+			solo.sleep(1000);
+			ViewOperationFunc.clickById(solo, "hot");
+			ViewOperationFunc.enterTextIndex(solo, 0, "老梁");
+			ViewOperationFunc.clickById(solo, "search_button");
+			solo.sleep(2000);
+
+			// 调用截图函数开始截图
+			ScreenshotFunc.screenShot(solo);
+			ScreenshotFunc.screenshotSolo(solo);
+			solo.goBack();
+			ViewOperationFunc.clearEditText(solo, 0);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	}
 }
