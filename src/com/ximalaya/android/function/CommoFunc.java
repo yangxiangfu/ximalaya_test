@@ -5,8 +5,8 @@ import android.view.ViewTreeObserver;
 
 import com.jayway.android.robotium.solo.Solo;
 import com.ximalaya.android.exception.DialogErrorException;
-import com.ximalaya.android.util.Report;
 import com.ximalaya.android.v2.AutoRobotium;
+import com.ximalaya.ting.android.util.Logger;
 
 /*
  * @author chrisandy
@@ -37,9 +37,7 @@ public class CommoFunc {
 		boolean scroolFlag = true;
 		while (scroolFlag) {
 			scroolFlag = solo.scrollUp();
-			Report.writeHTMLLog(testName, "scrool up", Report.DONE, "");
 		}
-		Report.writeHTMLLog(testName, "已scroll页面至顶", Report.DONE, "");
 	}
 
 	/***
@@ -50,7 +48,6 @@ public class CommoFunc {
 	public static void scrollPageToTop(Solo solo) {
 		String testName = "上拉页面至顶";
 		solo.scrollToTop();
-		Report.writeHTMLLog(testName, "已scroll页面到顶", Report.DONE, "");
 	}
 
 	/**
@@ -61,20 +58,17 @@ public class CommoFunc {
 		boolean scroolFlag = true;
 		while (scroolFlag) {
 			scroolFlag = solo.scrollDown();
-			Report.writeHTMLLog(testName, "scrool down", Report.DONE, "");
 		}
-		Report.writeHTMLLog(testName, "已scroll页面置底", Report.DONE, "");
 	}
 
 	/**
-	 * 上拉页面至顶
+	 * 上拉页面至底
 	 * 
 	 * @param solo
 	 */
 	public static void scrollPageToBottom(Solo solo) {
-		String testName = "上拉页面至顶";
+		String testName = "上拉页面至底";
 		solo.scrollToBottom();
-		Report.writeHTMLLog(testName, "已scroll页面至顶", Report.DONE, "");
 	}
 
 	/**
@@ -85,8 +79,6 @@ public class CommoFunc {
 	public static void scrollDownlist(Solo solo, int index) {
 		String testName = "选择列表下拉页面";
 		solo.scrollDownList(index);
-		Report.writeHTMLLog(testName, "下拉当前页面指定下标" + index + "的控件",
-				Report.DONE, "");
 	}
 
 	/**
@@ -98,7 +90,6 @@ public class CommoFunc {
 	public static void alertConfimOk(Solo solo) {
 		solo.waitForText("请选择需要的操作");
 		if (ViewOperationFunc.searchText(solo, "请选择需要的操作")) {
-			Report.writeHTMLLog("", "", Report.DONE, "");
 			solo.clickOnButton("确定");
 		}
 	}
@@ -112,11 +103,10 @@ public class CommoFunc {
 	public static void alertConfimCancel(Solo solo) {
 		solo.waitForText("请选择需要的操作");
 		if (ViewOperationFunc.searchText(solo, "请选择需要的操作")) {
-			Report.writeHTMLLog("", "", Report.DONE, "");
 			solo.clickOnButton("取消");
 		}
 	}
-	
+
 	/**
 	 * 账户登录
 	 * 
@@ -144,7 +134,6 @@ public class CommoFunc {
 		String testName = "登录功能";
 		// 进入喜马拉雅登录主页
 		ViewOperationFunc.waitforView(solo, "lg_visite_tv");
-		Report.writeHTMLLog("", "喜马拉雅登录主页加载成功", Report.DONE, "");
 		ViewOperationFunc.clickById(solo, "lg_regist_button");
 		if (ViewOperationFunc.searchTextNotScroll(solo, "登录")) {
 			// 用户名密码
@@ -152,17 +141,37 @@ public class CommoFunc {
 			ViewOperationFunc.enterTextIndex(solo, 1, passWord);
 			ViewOperationFunc.clickById(solo, "lg_btn");
 			if (ViewOperationFunc.searchTextNotScroll(solo, "网络连接不可用，请检查网络设置")) {
-				Report.writeHTMLLog(testName, "网络连接失败，用例停止运行", Report.FAIL, "");
 			}
 			// 连接超时
 			if (ViewOperationFunc.searchTextNotScroll(solo, "连接超时")) {
 				ViewOperationFunc.clickonText(solo, "确定");
 			}
-			Report.writeHTMLLog(testName, "登录成功", Report.DONE, "");
 		}
 		// CommoFunc.goback(solo);
 		ViewOperationFunc.waitForText(solo, "全部");
-		Report.writeHTMLLog(testName, "成功加载到主页面", Report.DONE, "");
+	}
+
+	/**
+	 * 退出登录
+	 * */
+
+	public static void exitLogin(Solo solo) throws Exception {
+		if (solo.searchText(".*?全部关注.*?")) {
+			ViewOperationFunc.clickonText(solo, "我");
+			solo.sleep(2000);
+			// 点击打开到设置页面
+			ViewOperationFunc.clickById(solo, "back_img");
+			solo.scrollToBottom();
+			ViewOperationFunc.clickonText(solo, "注销登录");
+			solo.sleep(2000);
+			boolean text = solo.searchText(".*?确定要注销账号吗.*?");
+			if (text) {
+				ViewOperationFunc.clickonButtonText(solo, "确定");
+			}
+			solo.sleep(5000);
+		} else {
+			System.out.println("没有登录");
+		}
 	}
 
 	/**
@@ -180,7 +189,7 @@ public class CommoFunc {
 			throw new DialogErrorException(solo, "软件弹出框显示异常信息");
 
 		} else {
-			Report.writeHTMLLog(testName, "没有弹出框出现", Report.DONE, "");
+			Logger.v("dialog", "没有弹出框出现");
 		}
 	}
 
@@ -190,6 +199,6 @@ public class CommoFunc {
 	public static void goback(Solo solo) {
 		String testName = "返回上级界面";
 		solo.goBack();
-		Report.writeHTMLLog(testName, "成功返回上级界面", Report.DONE, "");
+		Logger.v("返回", "成功返回上级界面");
 	}
 }

@@ -14,10 +14,14 @@ public class AllTests extends TestCase{
 	
 	//组织多个测试类测试
 	public static Test suite(){
+
 		TestSuite suite = new TestSuite();
 		suite.addTestSuite(LoginTest.class);
+		suite.addTestSuite(RegisterTest.class);
+		suite.addTestSuite(EditFollowingGroupTest.class);
 		suite.addTestSuite(ScrollFeedList.class);
 		suite.addTestSuite(FoundSearchTest.class);
+		suite.addTestSuite(SettingTest.class);
 		return suite;
 	}
 	

@@ -3,7 +3,6 @@ package com.ximalaya.android.test;
 import com.jayway.android.robotium.solo.Solo;
 import com.ximalaya.android.function.ScreenshotFunc;
 import com.ximalaya.android.function.ViewOperationFunc;
-import com.ximalaya.android.util.Report;
 import com.ximalaya.ting.android.activity.login.WelcomeActivity;
 
 import android.test.ActivityInstrumentationTestCase2;
@@ -45,7 +44,7 @@ public class FoundSearchTest extends
 			if (isnotext) {
 				System.out.println("the tip is true");
 			} else
-				Report.writeHTMLLog(notext, "操作结束,提示不正确", Report.FAIL, "");
+				System.out.println("未检测到此提示语");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,6 +56,7 @@ public class FoundSearchTest extends
 
 		// solo.clickOnText("");
 		try {
+			ViewOperationFunc.clickonText(solo, "发现");
 			ViewOperationFunc.clickById(solo, "search_tv");
 			solo.sleep(1000);
 			ViewOperationFunc.clickById(solo, "today");
@@ -81,6 +81,7 @@ public class FoundSearchTest extends
 
 		// solo.clickOnText("");
 		try {
+			ViewOperationFunc.clickonText(solo, "发现");
 			ViewOperationFunc.clickById(solo, "search_tv");
 			solo.sleep(1000);
 			ViewOperationFunc.clickById(solo, "necessary");
@@ -105,6 +106,7 @@ public class FoundSearchTest extends
 
 		// solo.clickOnText("");
 		try {
+			ViewOperationFunc.clickonText(solo, "发现");
 			ViewOperationFunc.clickById(solo, "search_tv");
 			solo.sleep(1000);
 			ViewOperationFunc.clickById(solo, "hot");

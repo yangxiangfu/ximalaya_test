@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.jayway.android.robotium.solo.Solo;
-import com.ximalaya.android.util.Report;
 import com.ximalaya.android.util.ScreenShot;
 
 /**
@@ -13,6 +12,13 @@ import com.ximalaya.android.util.ScreenShot;
  * */
 public class ScreenshotFunc {
 
+	private static long systemTime=System.currentTimeMillis();
+	private static String nowDateTime = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date(systemTime));// 存报告和截图用的
+	
+	final public static String getNowDateTime() {
+		return nowDateTime;
+	}
+	
 	/**
 	 * 封装截图函数
 	 * 
@@ -22,7 +28,7 @@ public class ScreenshotFunc {
 		System.out.println("截图开始------>");
 		return ScreenShot.savePicture(
 				ScreenShot.takeScreenShot(solo.getCurrentActivity()),
-				Report.getNowDateTime());
+				getNowDateTime());
 	}
 
 	/**
@@ -50,7 +56,5 @@ public class ScreenshotFunc {
 		solo.takeScreenshot(strFileName);
 		System.out.println("截图结束---->");
 		strFileName = interceptor.concat(strFileName);
-		Report.writeHTMLLog("弹出框截图", "出现弹出框，截图时间为:" + strFileName, Report.DONE,
-				strFileName);
 	}
 }
